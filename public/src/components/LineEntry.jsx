@@ -1,18 +1,26 @@
 import React, { useState } from 'react';
 
-function LineEntry( { saveLine } ) {
+function LineEntry( { saveLine, lastWord } ) {
+  console.log("last word " + lastWord)
   const [line, setLine] = useState('');
 
+  const storyPrompts = {
+    firstEntry:'Begin the story with a hook! Remember, the next author will only see your last word!',
+    add:'Continue a line or two to the story. Remember, the next author will only see your last word!'
+  }
+
   const handleSubmit = (event) => {
-    event.preventDefault()
-    saveLine(line)
+    event.preventDefault();
+    saveLine(line);
+    setLine('');
   }
 
   return (
     <div>
+      { lastWord === '' ? storyPrompts.firstEntry : storyPrompts.add}
       <form onSubmit= { handleSubmit }>
         <label>
-          Add a line or two to the story. Remember, the next author will only see your last word!
+          {`...${lastWord}`}<br></br>
           <textarea
             value= {line}
             onChange= { e => setLine(e.target.value) }

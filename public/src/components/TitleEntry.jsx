@@ -4,7 +4,6 @@ function TitleEntry( {saveStory, savedTitle} ) {
   const [title, setTitle] = useState('');
 
   const handleSubmit = (event) => {
-    debugger;
     event.preventDefault()
     saveStory(title)
   }

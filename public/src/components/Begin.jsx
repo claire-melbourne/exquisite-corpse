@@ -8,7 +8,7 @@ function Begin({title, selectView}) {
       return null;
     }
     return (
-      <button onClick= {() => handleClick()}> Write the first line for {title}</button>
+      <button onClick= { handleClick }> Write the first line for {title}</button>
     )
 }
 
