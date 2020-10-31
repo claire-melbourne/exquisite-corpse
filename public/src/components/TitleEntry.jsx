@@ -6,15 +6,15 @@ function TitleEntry( {saveStory, savedTitle} ) {
   const handleSubmit = (event) => {
     debugger;
     event.preventDefault()
-    alert(`${title} beginning!`)
     saveStory(title)
   }
+
   if (savedTitle) {
     return null;
   } else {
     return (
       <div>
-        <form onSubmit= {handleSubmit}>
+        <form onSubmit= { handleSubmit }>
           <label>
             Enter your title here <br></br>
             <input
