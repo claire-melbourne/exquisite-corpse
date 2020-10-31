@@ -20,7 +20,7 @@ function App() {
     return (
       <div>
         <h1>Welcome to Exquisite Corps-y Time</h1>
-        <TitleEntry saveStory= { (entry) => {saveStory(entry)} }/>
+        <TitleEntry saveStory= { (entry) => {saveStory(entry)} } savedTitle= {title}/>
         <p>Your story is called.... {title}</p>
         <Begin title= {title} selectView= { (view) => {selectView(view)} }/>
       </div>
