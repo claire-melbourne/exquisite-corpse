@@ -1,4 +1,5 @@
 import React, {useState, useEffect} from 'react';
+import axios from 'axios';
 import TitleEntry from './TitleEntry.jsx';
 import Begin from './Begin.jsx';
 import LineEntry from './LineEntry.jsx';
@@ -11,15 +12,30 @@ function App() {
   const [view, setView] = useState('home');
   const [lastWord, setLastWord] = useState('');
 
+  const createStory = (storyTitle) => {
+    axios.post('/title', {title: storyTitle})
+    .then((res) => {
+      console.log("title updated to ", res.data);
+      setTitle(res.data);
+    })
+  }
+
+  const createLine = (storyLine) => {
+    axios.post('/addline', {line: storyLine})
+    .then((res) => {
+      console.log("line added ", res.data);
+    })
+  }
+
   const saveStory = (entry) => {
-    setTitle(entry);
-    //POST request
+    createStory(entry);
   }
   const getLastWord = (entry) => {
     let words = entry.split(' ');
     setLastWord(words[words.length - 1]);
   }
   const saveLine = (entry) => {
+    createLine(entry);
     let currentStory = storyLines;
     currentStory.push(entry);
     getLastWord(entry);
