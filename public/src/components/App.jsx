@@ -4,6 +4,7 @@ import TitleEntry from './TitleEntry.jsx';
 import Begin from './Begin.jsx';
 import LineEntry from './LineEntry.jsx';
 import EndStory from './EndStory.jsx';
+import StoryTeller from './StoryTeller.jsx'
 
 function App() {
   const [title, setTitle] = useState('');
@@ -11,40 +12,70 @@ function App() {
   const [storyLines, setStoryLines] = useState([]);
   const [view, setView] = useState('home');
   const [lastWord, setLastWord] = useState('');
+  const [formattedTitle, setFormattedTitle] = useState('');
+
+  useEffect(() =>{
+    let hyphenatedTitle = title.split(' ').join('-');
+    setFormattedTitle(hyphenatedTitle);
+  }, [title]);
+
+  const getStoryLines = () => {
+    axios.get(`/story/${formattedTitle}`)
+    .then((res) => {
+      console.log('story retrieved, ', res.data.storyLines)
+      setStoryLines(res.data.storyLines);
+    })
+    .catch((err) => {
+      console.log(err);
+    });
+  };
 
   const createStory = (storyTitle) => {
     axios.post('/title', {title: storyTitle})
     .then((res) => {
-      console.log("title updated to ", res.data);
-      setTitle(res.data);
+      if (res.data.title === undefined) {
+        alert('title taken, get creative')
+      } else {
+        console.log("title updated to ", res.data.title);
+        setTitle(res.data.title);
+      }
     })
-  }
+    .catch((err) => {
+      console.log(err);
+    });
+  };
 
   const createLine = (storyLine) => {
-    axios.post('/addline', {line: storyLine})
+    axios.put(`/addline/${ formattedTitle }`, {line: storyLine})
     .then((res) => {
       console.log("line added ", res.data);
+      getStoryLines();
     })
+    .catch((err) => {
+      console.log(err);
+    });
+  };
+
+  const saveStory = (storyTitle) => {
+    createStory(storyTitle);
   }
 
-  const saveStory = (entry) => {
-    createStory(entry);
-  }
-  const getLastWord = (entry) => {
-    let words = entry.split(' ');
+  const getLastWord = (line) => {
+    let words = line.split(' ');
     setLastWord(words[words.length - 1]);
   }
-  const saveLine = (entry) => {
-    createLine(entry);
-    let currentStory = storyLines;
-    currentStory.push(entry);
-    getLastWord(entry);
-    setStoryLines(currentStory);
+
+  const saveLine = (line) => {
+    createLine(line);
+    // let currentStory = storyLines;
+    // currentStory.push(entry);
+    getLastWord(line);
+    // setStoryLines(currentStory);
     //POST request
   }
 
   const selectView = (string) => {
-    console.log(string)
+    console.log(string);
     setView(string);
   }
 
@@ -53,6 +84,7 @@ function App() {
     setAuthors([]);
     setStoryLines([]);
     setLastWord('');
+    //add delete api
   }
 
   if (view === 'home') {
@@ -74,7 +106,8 @@ function App() {
   } else {
     return (
       <div>
-        Compiling your story...
+        <h1>{title}</h1>
+        <StoryTeller storyLines= {storyLines}/>
       </div>
     )
   }
