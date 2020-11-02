@@ -23,6 +23,7 @@ function LineEntry( { saveLine, lastWord } ) {
           {`...${lastWord}`}<br></br>
           <textarea
             value= {line}
+            required
             onChange= { e => setLine(e.target.value) }
           />
         </label>

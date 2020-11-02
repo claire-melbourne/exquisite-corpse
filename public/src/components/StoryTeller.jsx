@@ -1,5 +1,6 @@
 import React, {useState} from 'react';
-import StoryLine from './StoryLine.jsx'
+//import StoryLine from './StoryLine.jsx';
+//import story image
 
 function StoryTeller({storyLines}) {
   const [count, setCount] = useState(0);
@@ -12,5 +13,7 @@ function StoryTeller({storyLines}) {
     </div>
   )
 };
+
+//
 
 export default StoryTeller;
