@@ -4,7 +4,7 @@ import TitleEntry from './TitleEntry.jsx';
 import Begin from './Begin.jsx';
 import LineEntry from './LineEntry.jsx';
 import EndStory from './EndStory.jsx';
-import StoryTeller from './StoryTeller.jsx'
+import StoryTeller from './StoryTeller.jsx';
 
 function App() {
   const [title, setTitle] = useState('');
@@ -67,11 +67,7 @@ function App() {
 
   const saveLine = (line) => {
     createLine(line);
-    // let currentStory = storyLines;
-    // currentStory.push(entry);
     getLastWord(line);
-    // setStoryLines(currentStory);
-    //POST request
   }
 
   const selectView = (string) => {

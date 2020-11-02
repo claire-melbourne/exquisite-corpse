@@ -7,7 +7,7 @@ const storySchema = new mongoose.Schema({
     required: true
   },
   authors: Array,
-  storyLines: Array
+  storyLines: Array,
 })
 const Story = mongoose.model('Story', storySchema);
 

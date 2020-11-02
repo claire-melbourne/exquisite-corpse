@@ -9,13 +9,17 @@ module.exports = async function analyzeSyntaxOfText(text, callback) {
   const [syntax] = await client.analyzeSyntax({document, encodingType});
 
   console.log('Tokens:');
-  var photoSearch = [];
+  var photoSearch = '';
   for (var i = 0; i < syntax.tokens.length; i ++) {
     var part = syntax.tokens[i];
     var count = 0;
     if (count < 4) {
       if (part.partOfSpeech.tag === 'ADJ' || part.partOfSpeech.tag === 'NOUN') {
-        photoSearch.push(part.text.content);
+        if (photoSearch === '') {
+          photoSearch += (part.text.content);
+        } else{
+          photoSearch += ',' + (part.text.content);
+        }
         count += 1;
       } else {
         console.log(' not a noun or adjective')

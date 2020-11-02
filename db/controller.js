@@ -26,14 +26,18 @@ module.exports = {
     });
   },
 
-  addLine: (storyTitle, storyLine, callback) => {
+  addLine: (storyTitle, storyLine, imageWords, callback) => {
     Story.findOne({title: storyTitle}, (err, result) => {
       if (err) {
         console.log(err);
         res.status(400).end('story not saved');
       } else {
         let story = result.storyLines;
-        story.push(storyLine);
+        let storyObj = {
+          line: storyLine,
+          keyWords: imageWords
+        };
+        story.push(storyObj);
         Story.updateOne({title: storyTitle}, {storyLines: story}, (err, result) => {
           if (err) {
             console.log(err);
