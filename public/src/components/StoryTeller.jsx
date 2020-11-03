@@ -1,10 +1,10 @@
 import React, {useState, useEffect} from 'react';
 import axios from 'axios';
+import soundFile from '../currentAudio1.mp3';
 //import StoryLine from './StoryLine.jsx';
 //import getPhoto from '../unsplash.js';
 //import getSpeech from '../../../speech.js'
-import AudioPlayer from './AudioPlayer.jsx';
-import { AudioPlayerProvider } from 'react-use-audio-player';
+
 
 function StoryTeller({storyLines, formattedTitle}) {
   const [count, setCount] = useState(0);
@@ -13,7 +13,7 @@ function StoryTeller({storyLines, formattedTitle}) {
     color: 'blue',
     backgroundImage: `url(${storyLines[count].imgUrl})`,
   };
-
+  let sound = new Audio(soundFile);
   // useEffect(() => {
   //   console.log(count)
   //   //console.log(textToSpeech)
@@ -22,9 +22,7 @@ function StoryTeller({storyLines, formattedTitle}) {
 
   return (
     <div>
-        <AudioPlayerProvider>
-          <AudioPlayer file="currentAudio.mp3" />
-        </AudioPlayerProvider>
+        <button onClick= {() => sound.play()}>begin</button>
         <div onClick={() => count > 0 ? setCount(count - 1) : {}}>&lt;</div>
         <p>{storyLines[count].line}</p>
         <img src= {storyLines[count].imgUrl} />

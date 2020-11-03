@@ -1,22 +1,22 @@
-import React from "react"
-import { useAudioPlayer } from "react-use-audio-player"
+// import React from "react"
 
-const AudioPlayer = ({ file }) => {
-    const { togglePlayPause, ready, loading, playing } = useAudioPlayer({
-        src: file,
-        format: "mp3",
-        autoplay: false,
-        onend: () => console.log("sound has ended!")
-    })
 
-    if (!ready && !loading) return <div>No audio to play</div>
-    if (loading) return <div>Loading audio</div>
+// const AudioPlayer = ({ file }) => {
+//     const { togglePlayPause, ready, loading, playing } = useAudioPlayer({
+//         src: file,
+//         format: "mp3",
+//         autoplay: false,
+//         onend: () => console.log("sound has ended!")
+//     })
 
-    return (
-        <div>
-            <button onClick={togglePlayPause}>{playing ? "Pause" : "Play"}</button>
-        </div>
-    )
-}
+//     if (!ready && !loading) return <div>No audio to play</div>
+//     if (loading) return <div>Loading audio</div>
 
-export default AudioPlayer;
+//     return (
+//         <div>
+//             <button onClick={togglePlayPause}>{playing ? "Pause" : "Play"}</button>
+//         </div>
+//     )
+// }
+
+// export default AudioPlayer;

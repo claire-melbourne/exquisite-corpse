@@ -1,12 +1,11 @@
 import React, {useState, useEffect} from 'react';
 import axios from 'axios';
 import TitleEntry from './TitleEntry.jsx';
+
 import Begin from './Begin.jsx';
 import LineEntry from './LineEntry.jsx';
 import EndStory from './EndStory.jsx';
 import StoryTeller from './StoryTeller.jsx';
-import AudioPlayer from './AudioPlayer.jsx';
-import { AudioPlayerProvider } from 'react-use-audio-player';
 
 function App() {
   const [title, setTitle] = useState('');
@@ -111,6 +110,7 @@ function App() {
   // }
 
 
+
   if (view === 'home') {
     return (
       <div>
@@ -130,7 +130,6 @@ function App() {
   } else {
     return (
       <div>
-
         <h1>{title}</h1>
         <StoryTeller storyLines= {storyLines} formattedTitle= { formattedTitle }/>
       </div>
