@@ -63,5 +63,23 @@ module.exports = {
         res.status(200).send(result);
       }
     })
-   }
+  },
+
+  getText: (title, cb) => {
+    Story.findOne( {title: title}, (err, result) => {
+      if (err) {
+        console.log(err);
+        // res.status(400).end('title not available');
+      } else {
+        let array = [];
+        result.storyLines.forEach(section => {
+          array.push(section.line);
+        })
+        let wholeStory = array.join(', ');
+        console.log("result", wholeStory);
+        cb(null, wholeStory);
+      }
+    });
+  },
+
 }

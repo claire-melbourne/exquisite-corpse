@@ -15,7 +15,7 @@ const getPhoto = (keywords, cb) => {
   axios(options)
   .then(result => {
     console.log('url received');
-    cb(result.data.urls.regular)
+    cb(result.data.urls.small)
   })
   .catch(err => {
     console.error('ERROR:', err);

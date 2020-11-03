@@ -5,6 +5,8 @@ import Begin from './Begin.jsx';
 import LineEntry from './LineEntry.jsx';
 import EndStory from './EndStory.jsx';
 import StoryTeller from './StoryTeller.jsx';
+import AudioPlayer from './AudioPlayer.jsx';
+import { AudioPlayerProvider } from 'react-use-audio-player';
 
 function App() {
   const [title, setTitle] = useState('');
@@ -14,7 +16,7 @@ function App() {
   const [lastWord, setLastWord] = useState('');
   const [formattedTitle, setFormattedTitle] = useState('');
 
-  useEffect(() =>{
+  useEffect(() => {
     let hyphenatedTitle = title.split(' ').join('-');
     setFormattedTitle(hyphenatedTitle);
   }, [title]);
@@ -81,7 +83,33 @@ function App() {
     setStoryLines([]);
     setLastWord('');
     //add delete api
-  }
+  };
+
+  // function readStory() {
+  //   window.location.reload(false);
+  //   selectView('')
+  // }
+  // const textToSpeech = () => {
+  //   console.log('accessed')
+  //   // axios.get(`/speech/${formattedTitle}`)
+  //   // .then((res) => {
+  //   //   console.log(res);
+  //   // })
+  //   // .catch((err) => {
+  //   //   console.log(err);
+  //   // })
+  // };
+  // const textToSpeech = () =>{
+  //   console.log('accessed');
+  //       axios.get(`/speech/${formattedTitle}`)
+  //   .then((res) => {
+  //     console.log(res);
+  //   })
+  //   .catch((err) => {
+  //     console.log(err);
+  //   })
+  // }
+
 
   if (view === 'home') {
     return (
@@ -95,15 +123,16 @@ function App() {
   } else if (view === 'storyline') {
     return (
       <div>
-        <EndStory selectView= { view => selectView(view) } clearEntries= { () => clearEntries() }/>
+        <EndStory selectView= { view => selectView(view) } clearEntries= { () => clearEntries() } textToSpeech= { () => textToSpeech() } />
         <LineEntry saveLine= { line => saveLine(line) } lastWord= { lastWord }/>
       </div>
     )
   } else {
     return (
       <div>
+
         <h1>{title}</h1>
-        <StoryTeller storyLines= {storyLines}/>
+        <StoryTeller storyLines= {storyLines} formattedTitle= { formattedTitle }/>
       </div>
     )
   }

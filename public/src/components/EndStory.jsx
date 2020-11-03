@@ -1,6 +1,6 @@
 import React, {useState} from 'react';
 
-function EndStory({ clearEntries, selectView }) {
+function EndStory({ clearEntries, selectView, textToSpeech }) {
 
   const handleStartOver = () => {
     clearEntries();
@@ -10,6 +10,7 @@ function EndStory({ clearEntries, selectView }) {
     event.preventDefault();
     //submit line
     selectView('compile');
+    textToSpeech();
   }
   return (
     <div>
