@@ -26,7 +26,7 @@ module.exports = {
     });
   },
 
-  addLine: (storyTitle, storyLine, imageWords, callback) => {
+  addLine: (storyTitle, storyLine, imageWords, imgUrl, callback) => {
     Story.findOne({title: storyTitle}, (err, result) => {
       if (err) {
         console.log(err);
@@ -35,7 +35,8 @@ module.exports = {
         let story = result.storyLines;
         let storyObj = {
           line: storyLine,
-          keyWords: imageWords
+          keyWords: imageWords,
+          imgUrl: imgUrl
         };
         story.push(storyObj);
         Story.updateOne({title: storyTitle}, {storyLines: story}, (err, result) => {
