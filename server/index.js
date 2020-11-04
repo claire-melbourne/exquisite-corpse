@@ -15,19 +15,24 @@ app.get('/story/:title', (req, res) => {
   controller.getStory(title, res);
 });
 
-app.get('/speech/:title', (req, res) => {
-  console.log(req.params);
-  let title = req.params.title.split('-').join(' ');
-  controller.getText(title, (err, result) => {
-    if (err) {
-      console.error(err);
-      res.end('no sound update');
-    } else {
-      getSpeech(result);
-      res.status(200).send(result);
-    }
-  });
+// app.get('/speech/:title', (req, res) => {
+//   console.log(req.params);
+//   let title = req.params.title.split('-').join(' ');
+//   controller.getText(title, (err, result) => {
+//     if (err) {
+//       console.error(err);
+//       res.end('no sound update');
+//     } else {
+//       getSpeech(result);
+//       res.status(200).send(result);
+//     }
+//   });
+// });
+
+app.get('/recent', (req, res) => {
+  controller.getRecent(res);
 });
+
 
 app.post('/title', (req, res) => {
   console.log('your request', req.body)

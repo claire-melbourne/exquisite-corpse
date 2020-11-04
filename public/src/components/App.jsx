@@ -6,6 +6,7 @@ import Begin from './Begin.jsx';
 import LineEntry from './LineEntry.jsx';
 import EndStory from './EndStory.jsx';
 import StoryTeller from './StoryTeller.jsx';
+import RecentTitles from './RecentTitles.jsx';
 
 const Container = styled.div`
   height: 100%;
@@ -26,6 +27,7 @@ function App() {
   const [lastWord, setLastWord] = useState('');
   const [formattedTitle, setFormattedTitle] = useState('');
   const [authorCount, setAuthorCount] = useState(0);
+  const [recentStories, setRecentStories] = useState([]);
 
   //const [authorNum, setAuthorNum] = useState(1);
 
@@ -34,16 +36,47 @@ function App() {
     setFormattedTitle(hyphenatedTitle);
   }, [title]);
 
-  const getStoryLines = () => {
-    axios.get(`/story/${formattedTitle}`)
+  const getStoryLines = (hyphTitle) => {
+    axios.get(`/story/${hyphTitle}`)
     .then((res) => {
       console.log('story retrieved, ', res.data.storyLines)
       setStoryLines(res.data.storyLines);
     })
     .catch((err) => {
+      alert('No story with that title')
       console.log(err);
     });
   };
+
+  const searchStories = (search) => {
+    let hyphSearch = search.split(' ').join('-');
+    axios.get(`/story/${hyphSearch}`)
+    .then((res) => {
+      console.log('story retrieved, ', res.data)
+      if(res.data = '') {
+        searchRecent();
+        //search recent stories
+        //set view to recent stories
+      } else {
+      setTitle(res.data.title);
+      setStoryLines(res.data.storyLines);
+      setAuthors(res.data.authors);
+      }
+    })
+    .catch((err) => {
+      console.log(err);
+    });
+  };
+
+  const searchRecent = () => {
+    axios.get(`/recent`)
+    .then((res) => {
+      console.log(res.data)
+    })
+    .catch((err) => {
+      console.error(err);
+    })
+  }
 
   const createStory = (storyObj) => {
     axios.post('/title', storyObj)
@@ -65,7 +98,7 @@ function App() {
     axios.put(`/addline/${ formattedTitle }`, {line: storyLine})
     .then((res) => {
       console.log("line added ", res.data);
-      getStoryLines();
+      getStoryLines(formattedTitle);
     })
     .catch((err) => {
       console.log(err);
@@ -120,38 +153,16 @@ function App() {
     //add delete api
   };
 
-  // function readStory() {
-  //   window.location.reload(false);
-  //   selectView('')
-  // }
-  // const textToSpeech = () => {
-  //   console.log('accessed')
-  //   // axios.get(`/speech/${formattedTitle}`)
-  //   // .then((res) => {
-  //   //   console.log(res);
-  //   // })
-  //   // .catch((err) => {
-  //   //   console.log(err);
-  //   // })
-  // };
-  // const textToSpeech = () =>{
-  //   console.log('accessed');
-  //       axios.get(`/speech/${formattedTitle}`)
-  //   .then((res) => {
-  //     console.log(res);
-  //   })
-  //   .catch((err) => {
-  //     console.log(err);
-  //   })
-  // }
-
-
-
+//if view is recent stories
+  //return Container wrapping
+    //titles
+    //onClick for any title retrieve the rest of it and set view to compile
+  //Button to go home write a new story
   if (view === 'home') {
     return (
       <Container>
-        <TitleEntry saveStory= { (name, a1, a2, a3, a4) => saveStory(name, a1, a2, a3, a4) } savedTitle= {title}/>
-        <Begin title= {title} authors= {authors} selectView= { view => selectView(view) }/>
+        <TitleEntry saveStory= { (name, a1, a2, a3, a4) => saveStory(name, a1, a2, a3, a4) } savedTitle= {title} searchStories = { (search) => searchStories(search) }/>
+        <Begin title= {title} authors= {authors} storyLines= {storyLines} selectView= { view => selectView(view) }/>
       </Container>
     )
   } else if (view === 'storyline') {
@@ -161,6 +172,10 @@ function App() {
         <EndStory selectView= { view => selectView(view) } clearEntries= { () => clearEntries() } textToSpeech= { () => textToSpeech() } />
       </div>
     )
+  } else if (view === 'recent') {
+    <Container>
+     <RecentTitles recentTitles= {recentTitles} selectView= { view => selectView(view) } selectStory= { selection => selectStory(selection) }/>
+  </Container>
   } else {
     return (
       <div>

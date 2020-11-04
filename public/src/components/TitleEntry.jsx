@@ -64,7 +64,7 @@ const SubmitInput = styled.input`
   }
 `;
 
-function TitleEntry( {saveStory, savedTitle, handleSearch} ) {
+function TitleEntry( {saveStory, savedTitle, searchStories} ) {
   const [title, setTitle] = useState('');
   const [author1, setAuthor1] = useState('');
   const [author2, setAuthor2] = useState('');
@@ -78,8 +78,9 @@ function TitleEntry( {saveStory, savedTitle, handleSearch} ) {
   }
 
   const handleSearch = (event) => {
+    debugger;
     event.preventDefault()
-    searchStory(searchVal);
+    searchStories(searchVal);
   }
 
   if (savedTitle) {
@@ -89,12 +90,11 @@ function TitleEntry( {saveStory, savedTitle, handleSearch} ) {
       <div>
       <h1>Welcome to Exquisite Corps-y Time</h1>
       <Wrapper>
-
       <Body>
         <div>
         <form onSubmit= { handleSubmit }>
         <Entries>
-            Enter your title here
+            Put a title here
             <TitleInput
             type= "text"
             value= {title}
@@ -103,7 +103,7 @@ function TitleEntry( {saveStory, savedTitle, handleSearch} ) {
             />
         </Entries>
         <Entries>
-          Enter authors here <br></br>
+          Put all participants pen names here <br></br>
             <AuthorInput
               type= "text"
               value= {author1}
@@ -147,6 +147,12 @@ function TitleEntry( {saveStory, savedTitle, handleSearch} ) {
             onChange= {e => setSearchVal(e.target.value)}
             />
         </Entries>
+        <Entries>
+          <SubmitInput
+          type= "submit"
+          value= "Find your story"
+          />
+           </Entries>
         </form>
       </Body>
       </Wrapper>

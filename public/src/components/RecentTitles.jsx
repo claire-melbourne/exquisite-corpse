@@ -1,5 +1,5 @@
 import React, {useState} from 'react';
-import Author from './Author.jsx';
+import RecentEntry from './RecentEntry.jsx';
 import styled from 'styled-components';
 
 const Body = styled.div`
@@ -49,38 +49,20 @@ const Button = styled.button`
   }
 `;
 
-function Begin({title, authors, storyLines, selectView}) {
+function RecentTitles({recentTitles, selectView, selectStory}) {
 
   const handleClick = () => {
-    selectView('storyline')
+    selectView('home')
   }
-  const handleBegin = () => {
-    selectView('compile')
-  }
-    if (title === '') {
-      return null;
-    }
-    if (storyLines.length > 0) {
-      return (
-        <Body>
-          <h2>Found your story!</h2>
-          <TitleText>'{title}'</TitleText>
-          <h3>Contributors:</h3>
-          {authors.map(author => <Author author = {author}/>)}
-          <Button onClick= { handleBegin }> Read '{title}' again!</Button>
-        </Body>
-      )
-    }
-    return (
-      <Body>
-        <h2>Story Title and Authors Saved!</h2>
-        <Entries>Your story is called.... </Entries>
-        <TitleText>'{title}'</TitleText>
-        <h3>Contributors:</h3>
-        {authors.map(author => <Author author = {author}/>)}
-        <Button onClick= { handleClick }> Write the first line for {title}</Button>
-      </Body>
-    )
+
+  return (
+    <Body>
+      <h2>Didn't find your story!</h2>
+      <h3>Choose a title below </h3>
+      {title.map(title => <RecentEntry title= {title} /> )}
+      <Button onClick= { handleClick }> Or write your own</Button>
+    </Body>
+  )
 }
 
-export default Begin;
+export default RecentTitles;
