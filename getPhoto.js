@@ -9,13 +9,14 @@ const getPhoto = (keywords, cb) => {
       'Authorization' : `Client-ID ${config.UNSPLASH_TOKEN}`
     },
     params: {
-      query: keywords
+      query: keywords,
+      orientation: 'landscape'
     }
   }
   axios(options)
   .then(result => {
     console.log('url received');
-    cb(result.data.urls.small)
+    cb(result.data.urls.regular)
   })
   .catch(err => {
     console.error('ERROR:', err);

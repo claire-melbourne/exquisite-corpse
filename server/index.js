@@ -30,6 +30,7 @@ app.get('/speech/:title', (req, res) => {
 });
 
 app.post('/title', (req, res) => {
+  console.log('your request', req.body)
   controller.createTitle(req, res, (err, result) => {
     if (err) {
       console.log(err);
@@ -53,7 +54,7 @@ app.put('/addline/:title', (req, res) => {
         }
       });
     });
-  });
+ });
 });
 
 app.listen(PORT, () => console.log(`Listening on ${PORT}`));

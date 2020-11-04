@@ -4,15 +4,22 @@ const Story = require('./model.js');
 module.exports = {
   createTitle: (req, res, callback) => {
     let storyTitle = req.body.title;
+    let authorNames = req.body.authors;
+    for (var i = req.body.authors.length - 1; i > 0; i --) {
+      if (req.body.authors[i] === ''){
+        req.body.authors.pop();
+      }
+      console.log(req.body.authors)
+    }
     Story.findOne({title: storyTitle}, (err, result) => {
       if (err) {
         console.log(err);
-        res.status(400).end();
+        res.status(400).end('failed');
       } else {
         if (result) {
           res.end('title taken')
         } else {
-          Story.create({title: storyTitle}, (err, result) => {
+          Story.create({title: storyTitle, authors: authorNames}, (err, result) => {
             if (err) {
               console.log(err);
               callback(err, null)

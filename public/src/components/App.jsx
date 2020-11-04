@@ -1,11 +1,22 @@
 import React, {useState, useEffect} from 'react';
 import axios from 'axios';
+import styled from 'styled-components';
 import TitleEntry from './TitleEntry.jsx';
-
 import Begin from './Begin.jsx';
 import LineEntry from './LineEntry.jsx';
 import EndStory from './EndStory.jsx';
 import StoryTeller from './StoryTeller.jsx';
+
+const Container = styled.div`
+  height: 100%;
+  padding-left: 30px;
+  position: relative;
+  width: 100%;
+  font-family: Calibre, Helvetica, Arial, sans-serif;
+  box-sizing: border-box;
+  background-color: light green;
+  color: white;
+`;
 
 function App() {
   const [title, setTitle] = useState('');
@@ -14,6 +25,9 @@ function App() {
   const [view, setView] = useState('home');
   const [lastWord, setLastWord] = useState('');
   const [formattedTitle, setFormattedTitle] = useState('');
+  const [authorCount, setAuthorCount] = useState(0);
+
+  //const [authorNum, setAuthorNum] = useState(1);
 
   useEffect(() => {
     let hyphenatedTitle = title.split(' ').join('-');
@@ -31,14 +45,15 @@ function App() {
     });
   };
 
-  const createStory = (storyTitle) => {
-    axios.post('/title', {title: storyTitle})
+  const createStory = (storyObj) => {
+    axios.post('/title', storyObj)
     .then((res) => {
       if (res.data.title === undefined) {
         alert('title taken, get creative')
       } else {
-        console.log("title updated to ", res.data.title);
+        console.log("authors updated to ", res.data.authors);
         setTitle(res.data.title);
+        setAuthors(res.data.authors)
       }
     })
     .catch((err) => {
@@ -57,16 +72,37 @@ function App() {
     });
   };
 
-  const saveStory = (storyTitle) => {
-    createStory(storyTitle);
+  const saveStory = (storyTitle, one, two, three, four) => {
+    let authorNames = [];
+    authorNames.push(one, two, three, four);
+
+    console.log("authors", authorNames);
+    let storyInfo = {
+      title: storyTitle,
+      authors: authorNames
+    }
+    createStory(storyInfo);
   }
 
   const getLastWord = (line) => {
+
     let words = line.split(' ');
-    setLastWord(words[words.length - 1]);
+    if (words.length > 1) {
+      let lastWords = '' + words[words.length - 2] + ' ' + words[words.length - 1]
+      setLastWord(lastWords);
+    } else {
+      setLastWord(words[0])
+    }
   }
 
   const saveLine = (line) => {
+    var count;
+    if (authorCount === authors.length - 1) {
+      count = 0;
+    } else {
+      count = authorCount + 1;
+    }
+    setAuthorCount(count)
     createLine(line);
     getLastWord(line);
   }
@@ -113,25 +149,22 @@ function App() {
 
   if (view === 'home') {
     return (
-      <div>
-        <h1>Welcome to Exquisite Corps-y Time</h1>
-        <TitleEntry saveStory= { entry => saveStory(entry) } savedTitle= {title}/>
-        <p>Your story is called.... {title}</p>
-        <Begin title= {title} selectView= { view => selectView(view) }/>
-      </div>
+      <Container>
+        <TitleEntry saveStory= { (name, a1, a2, a3, a4) => saveStory(name, a1, a2, a3, a4) } savedTitle= {title}/>
+        <Begin title= {title} authors= {authors} selectView= { view => selectView(view) }/>
+      </Container>
     )
   } else if (view === 'storyline') {
     return (
       <div>
+        <LineEntry saveLine= { line => saveLine(line) } authors= {authors} authorCount = {authorCount} lastWord= { lastWord }/>
         <EndStory selectView= { view => selectView(view) } clearEntries= { () => clearEntries() } textToSpeech= { () => textToSpeech() } />
-        <LineEntry saveLine= { line => saveLine(line) } lastWord= { lastWord }/>
       </div>
     )
   } else {
     return (
       <div>
-        <h1>{title}</h1>
-        <StoryTeller storyLines= {storyLines} formattedTitle= { formattedTitle }/>
+        <StoryTeller storyLines= {storyLines} title= { title } authors= { authors }/>
       </div>
     )
   }
