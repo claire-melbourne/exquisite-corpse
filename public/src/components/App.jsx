@@ -32,8 +32,10 @@ function App() {
   //const [authorNum, setAuthorNum] = useState(1);
 
   useEffect(() => {
-    let hyphenatedTitle = title.split(' ').join('-');
-    setFormattedTitle(hyphenatedTitle);
+    if (title) {
+      let hyphenatedTitle = title.split(' ').join('-');
+      setFormattedTitle(hyphenatedTitle);
+    }
   }, [title]);
 
   const getStoryLines = (hyphTitle) => {
@@ -49,19 +51,20 @@ function App() {
   };
 
   const searchStories = (search) => {
+    console.log('search term', search)
     let hyphSearch = search.split(' ').join('-');
+    console.log('search term hyph', hyphSearch)
     axios.get(`/story/${hyphSearch}`)
     .then((res) => {
       console.log('story retrieved, ', res.data)
-      if(res.data = '') {
+      if(res.data === '') {
         searchRecent();
-        //search recent stories
-        //set view to recent stories
+        setView()
       } else {
       setTitle(res.data.title);
       setStoryLines(res.data.storyLines);
       setAuthors(res.data.authors);
-      }
+    }
     })
     .catch((err) => {
       console.log(err);
@@ -71,7 +74,13 @@ function App() {
   const searchRecent = () => {
     axios.get(`/recent`)
     .then((res) => {
-      console.log(res.data)
+      var titles = [];
+      for (var i = 0; i < res.data.length; i ++) {
+        titles.push(res.data[i].title);
+      }
+      console.log('titles', titles)
+      setRecentStories(titles);
+      setView('recent')
     })
     .catch((err) => {
       console.error(err);
@@ -118,14 +127,12 @@ function App() {
   }
 
   const getLastWord = (line) => {
-
+    console.log('heres get last words', line)
     let words = line.split(' ');
-    if (words.length > 1) {
-      let lastWords = '' + words[words.length - 2] + ' ' + words[words.length - 1]
-      setLastWord(lastWords);
-    } else {
-      setLastWord(words[0])
-    }
+    console.log("words", words)
+    let lastWords = words.slice([words.length - 3], [words.length]);
+    console.log('lastwords,', lastWords)
+    setLastWord(lastWords.join(' '));
   }
 
   const saveLine = (line) => {
@@ -145,6 +152,7 @@ function App() {
     setView(string);
   }
 
+
   const clearEntries = () => {
     setTitle('');
     setAuthors([]);
@@ -158,14 +166,7 @@ function App() {
     //titles
     //onClick for any title retrieve the rest of it and set view to compile
   //Button to go home write a new story
-  if (view === 'home') {
-    return (
-      <Container>
-        <TitleEntry saveStory= { (name, a1, a2, a3, a4) => saveStory(name, a1, a2, a3, a4) } savedTitle= {title} searchStories = { (search) => searchStories(search) }/>
-        <Begin title= {title} authors= {authors} storyLines= {storyLines} selectView= { view => selectView(view) }/>
-      </Container>
-    )
-  } else if (view === 'storyline') {
+if (view === 'storyline') {
     return (
       <div>
         <LineEntry saveLine= { line => saveLine(line) } authors= {authors} authorCount = {authorCount} lastWord= { lastWord }/>
@@ -173,15 +174,26 @@ function App() {
       </div>
     )
   } else if (view === 'recent') {
+    return (
     <Container>
-     <RecentTitles recentTitles= {recentTitles} selectView= { view => selectView(view) } selectStory= { selection => selectStory(selection) }/>
+     <RecentTitles recentStories= {recentStories} selectView= { view => selectView(view) } searchStories= { selection => searchStories(selection) }/>
   </Container>
-  } else {
+    )
+  } else if (view === 'compile') {
     return (
       <div>
-        <StoryTeller storyLines= {storyLines} title= { title } authors= { authors }/>
+        <StoryTeller storyLines= {storyLines} title= { title } authors= { authors } selectView= { view => selectView(view) } clearEntries= { () => clearEntries() }/>
       </div>
     )
+  } else {
+
+    return (
+      <Container>
+        <TitleEntry saveStory= { (name, a1, a2, a3, a4) => saveStory(name, a1, a2, a3, a4) } savedTitle= {title} searchStories = { (search) => searchStories(search) }/>
+        <Begin title= {title} authors= {authors} storyLines= {storyLines} selectView= { view => selectView(view) }/>
+      </Container>
+    )
+
   }
 }
 

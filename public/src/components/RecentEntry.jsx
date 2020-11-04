@@ -2,15 +2,20 @@ import React, {useState} from 'react';
 import styled from 'styled-components';
 const TitleText = styled.div`
   font-style: oblique;
-  font-size: 40px;
-  color: light blue;
-
+  font-size: 25px;
+  color: bisque;
+  &:hover {
+    color: green;
+  }
 `;
 
-function RecentEntry(title, selectView, selectStory) {
+function RecentEntry({title, selectView, searchStories}) {
 
   const handleClick = () => {
-    selectStory(title);
+    console.log('inside the click', title)
+    // event.preventDefault();
+    searchStories(title);
+    console.log(selectView);
     selectView('compile');
   }
 

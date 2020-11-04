@@ -46,11 +46,11 @@ const SubmitInput = styled.input`
   border: none;
   color: #fff;
   display: block;
-  width: 40%;
+  width: 60%;
   line-height: 1.3333333;
   padding: 10px 15px;
   position: relative;
-  font-size: 12px;
+  font-size: 25px;
   font-weight: 700;
   text-align: center;
   vertical-align: middle;
@@ -62,6 +62,11 @@ const SubmitInput = styled.input`
     background-color: #fff;
     border: 2px solid rgb(185, 217, 172);
   }
+`;
+const Heading = styled.h1`
+display: flex;
+flex-direction: column;
+align-items: center;
 `;
 
 function TitleEntry( {saveStory, savedTitle, searchStories} ) {
@@ -88,10 +93,13 @@ function TitleEntry( {saveStory, savedTitle, searchStories} ) {
   } else {
     return (
       <div>
-      <h1>Welcome to Exquisite Corps-y Time</h1>
+      <Heading>Welcome to Exquisite Corps-y Time</Heading>
       <Wrapper>
       <Body>
         <div>
+        <Entries>
+        <h2>Start a new story</h2>
+      </Entries>
         <form onSubmit= { handleSubmit }>
         <Entries>
             Put a title here
@@ -136,7 +144,9 @@ function TitleEntry( {saveStory, savedTitle, searchStories} ) {
         </div>
       </Body>
       <Body>
-        Find an old story
+      <Entries>
+        <h2>Find an old story</h2>
+      </Entries>
         <form onSubmit= { handleSearch }>
         <Entries>
             Enter title you are searching for

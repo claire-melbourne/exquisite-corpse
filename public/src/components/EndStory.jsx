@@ -19,16 +19,16 @@ const Entries = styled.div`
 `;
 const Button = styled.button`
   transition: background-color 0.4s ease 0s, border-color 0.5s ease 0s, color 0.4s ease 0s;
-  background-color: rgb(185, 217, 172);
+  background-color: rgb(200, 180, 150);
   border: none;
   color: #fff;
   display: block;
-  width: 40%;
+  width: 25%;
   line-height: 1.3333333;
   margin-top: 10px;
   padding: 10px 15px;
   position: relative;
-  font-size: 12px;
+  font-size: 25px;
   font-weight: 700;
   text-align: center;
   vertical-align: middle;
@@ -36,9 +36,9 @@ const Button = styled.button`
   cursor: pointer;
   white-space: nowrap;
   &:hover {
-    color: rgb(185, 217, 172);
+    color: rgb(200, 180, 150);
     background-color: #fff;
-    border: 2px solid rgb(185, 217, 172);
+    border: 2px solid rgb(200, 180, 150);
   }
 `;
 

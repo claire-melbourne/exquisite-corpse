@@ -10,9 +10,9 @@ const Body = styled.div`
   font-family: Calibre, Helvetica, Arial, sans-serif;
 `;
 const Entries = styled.div`
+  width: 80%;
   color: bisque;
-  width: 553px;
-  margin-bottom: 15px;
+  margin: 15px;
   display: flex;
   flex-direction: column;
   align-items: left;
@@ -20,7 +20,7 @@ const Entries = styled.div`
 `;
 
 const StyledTextArea = styled.textarea`
-  width: 100%;
+  width: 560px;
   height: 150px;
   padding: 12px 20px;
   box-sizing: border-box;
@@ -28,11 +28,12 @@ const StyledTextArea = styled.textarea`
   border-radius: 4px;
   background-color: #f8f8f8;
   resize: none;
+  font-size: 25px;
 `;
 
 const SubmitInput = styled.input`
   transition: background-color 0.4s ease 0s, border-color 0.5s ease 0s, color 0.4s ease 0s;
-  background-color: rgb(185, 217, 172);
+  background-color: rgb(200, 180, 150);
   border: none;
   color: #fff;
   display: block;
@@ -40,7 +41,7 @@ const SubmitInput = styled.input`
   line-height: 1.3333333;
   padding: 10px 15px;
   position: relative;
-  font-size: 12px;
+  font-size: 25px;
   font-weight: 700;
   text-align: center;
   vertical-align: middle;
@@ -48,9 +49,9 @@ const SubmitInput = styled.input`
   cursor: pointer;
   white-space: nowrap;
   &:hover {
-    color: rgb(185, 217, 172);
+    color: rgb(200, 180, 150);
     background-color: #fff;
-    border: 2px solid rgb(185, 217, 172);
+    border: 2px solid rgb(200, 180, 150);
   }
 `;
 
@@ -60,8 +61,8 @@ function LineEntry( { saveLine, lastWord, authors, authorCount } ) {
   const [line, setLine] = useState('');
 
   const storyPrompts = {
-    firstEntry:`${authors[0]}, begin the story with a hook! \nRemember, ${authors[1]} will only see end of your brilliant contribution! End your last phrase mid-thought so they can finish it.`,
-    add:`${authors[authorCount]}, add a few linest to the story. \nRemember, ${authors[authorCount === authors.length - 1 ? 0 : authorCount + 1]} will only see the end of your shining word-smithery! End your last phrase mid-thought so they can finish it.\nHere's where we left off: \n"...${lastWord}"`
+    firstEntry:`${authors[0]}, begin the story with a hook! Remember, ${authors[1]} will only see the end of your brilliant contribution! End your last phrase mid-thought, to give them a clue how to continue the story.`,
+    add:`${authors[authorCount]}, add a few lines to the story. \nRemember, ${authors[authorCount === authors.length - 1 ? 0 : authorCount + 1]} will only see the end of your shining word-smithery! End your last phrase mid-thought to give them a clue how to continue the story.\nHere's where we left off: \n"...${lastWord}"`
   }
 
   const handleSubmit = (event) => {

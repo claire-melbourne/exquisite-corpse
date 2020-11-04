@@ -89,5 +89,19 @@ module.exports = {
     });
   },
 
+    getLatest : (res) => {
+    Story.find()
+      .sort({_id: -1})
+      .limit(5)
+      .then(story => {
+        console.log(story);
+        res.send(story)
+    })
+    .catch(err => {
+      console.log(err)
+      res.send('no story found')
+    })
+  }
+
 
 }

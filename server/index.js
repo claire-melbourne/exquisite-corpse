@@ -30,7 +30,7 @@ app.get('/story/:title', (req, res) => {
 // });
 
 app.get('/recent', (req, res) => {
-  controller.getRecent(res);
+  controller.getLatest(res);
 });
 
 

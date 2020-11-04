@@ -55,7 +55,7 @@ const Arrow = styled.span`
   font-size: 150px;
   color: white;
   z-index: 100;
-  opacity: .2;
+  opacity: .1;
   &:hover {
     cursor: pointer;
     opacity: .9
@@ -76,58 +76,86 @@ const ImageStyle = styled.img`
   position: absolute;
   top: -95px;
   padding: 10px;
-  border: 2px solid rgb(185, 217, 172);
   font-weight: 700px;
 `;
 
-function StoryTeller({storyLines, title, authors}) {
+const Button = styled.button`
+  transition: background-color 0.4s ease 0s, border-color 0.5s ease 0s, color 0.4s ease 0s;
+  background-color: rgb(200, 180, 150);
+  border: none;
+  color: #fff;
+  display: block;
+  width: 40%;
+  line-height: 1.3333333;
+  margin-top: 85px;
+  padding: 10px 15px;
+  position: relative;
+  font-size: 25px;
+  font-weight: 700;
+  text-align: center;
+  vertical-align: middle;
+  font-family: Calibre, Helvetica, Arial, sans-serif;
+  cursor: pointer;
+  white-space: nowrap;
+  &:hover {
+    color: rgb(185, 217, 172);
+    background-color: rgb(200, 180, 150);
+    border: 2px solid rgb(185, 217, 172);
+  }
+`;
+
+function StoryTeller({storyLines, title, authors, selectView, clearEntries}) {
   const [count, setCount] = useState(-1);
   const [end, setEnd] = useState(false);
   const sound = new Audio(soundFile);
 
-  // const startInterval = () => {
-  //   setInterval(() => {
-  //     setCount(count + 1)
-  //     console.log(count)
-  //   }, 3000);
-  // };
   useEffect(() => {
-    sound.play()
+    sound.play();
     const interval = setInterval(() => {
       setCount(count => count + 1);
-    }, 5000);
-    if (count === storyLines.length){
-      clearInterval(interval)
+    }, 7000);
+    if (count > storyLines.length) {
+      console.log(count);
+      clearInterval(interval);
     }
-    return () => clearInterval(interval);
+    return () => {
+      sound.pause();
+    }
   }, []);
 
   const handleClick = () => {
     setCount(0);
-
-    startInterval();
   };
 
+  const handleHomeSelect = () => {
+    clearEntries()
+    selectView('home')
+  }
 
+  const handleStorySelect = () => {
+    selectView('home')
+  }
 
-  if (count === -1) {
+  if (count < 0) {
     return (
       <Body onClick={handleClick}>
         <h1>{title}</h1>
         <h2> by {authors.join(', ')}</h2>
-      Click to begin
+        Click on any text to move ahead
       </Body>
     );
   } else if (count >= storyLines.length) {
     return (
       <Body onClick={() => setCount(storyLines.length - 1)}>
       <h1>The End</h1>
+      <Button onClick= { handleStorySelect } > Read '{title}' again!</Button>
+      <Button onClick= { handleHomeSelect } > Return to main page</Button>
       </Body>
     );
   } else {
     return (
       <Container>
-          <Arrow onClick={() => count >= 0 ? setCount(count - 1) : {}}>&lt;</Arrow>
+          <Arrow onClick={() => count >= 0 ? setCount(count - 1) : {}}> &lt;</Arrow>
           <Body>
             <ImageStyle src= {storyLines[count].imgUrl} />
             <Text>{storyLines[count].line}</Text>
