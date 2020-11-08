@@ -17,6 +17,7 @@ const Entries = styled.div`
   flex-direction: column;
   align-items: left;
 `;
+
 const Button = styled.button`
   transition: background-color 0.4s ease 0s, border-color 0.5s ease 0s, color 0.4s ease 0s;
   background-color: rgb(200, 180, 150);
@@ -42,30 +43,31 @@ const Button = styled.button`
   }
 `;
 
-
 function EndStory({ clearEntries, selectView, textToSpeech }) {
-
   const handleStartOver = () => {
     clearEntries();
     selectView('home');
-  }
+  };
   const handleTheEnd = () => {
     event.preventDefault();
-    //submit line
     selectView('compile');
-  }
+  };
   return (
     <Body>
       <Entries>
         Make sure to submit before you click to end the story!
       </Entries>
-      <Button onClick= { handleTheEnd }>The End</Button>
+      <Button onClick= { handleTheEnd }>
+        The End
+      </Button>
       <Entries>
         If you just said something you regret, you can click below and say it was an accident.
       </Entries>
-      <Button onClick= { handleStartOver }>Start over</Button>
+      <Button onClick= { handleStartOver }>
+        Start over
+      </Button>
     </Body>
-  )
+  );
 };
 
 export default EndStory;

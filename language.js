@@ -28,5 +28,5 @@ module.exports = async function analyzeSyntaxOfText(text, callback) {
   }
   callback(photoSearch)
 }
-
+//FOR DEBUGGING
 // analyzeSyntaxOfText('I am the fluffy end but I will keep cats if you let me', (input) => console.log(`https://loremflickr.com/320/240/${input}`))

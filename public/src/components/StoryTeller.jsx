@@ -112,15 +112,15 @@ function StoryTeller({storyLines, title, authors, selectView, clearEntries}) {
   useEffect(() => {
     sound.play();
     const interval = setInterval(() => {
-      setCount(count => count + 1);
-    }, 7000);
+        setCount(count => count + 1);
+      }, 7000);
     if (count > storyLines.length) {
       console.log(count);
       clearInterval(interval);
     }
     return () => {
       sound.pause();
-    }
+    };
   }, []);
 
   const handleClick = () => {
@@ -128,41 +128,57 @@ function StoryTeller({storyLines, title, authors, selectView, clearEntries}) {
   };
 
   const handleHomeSelect = () => {
-    clearEntries()
-    selectView('home')
-  }
+    clearEntries();
+    selectView('home');
+  };
 
   const handleStorySelect = () => {
-    selectView('home')
-  }
+    selectView('home');
+  };
 
   if (count < 0) {
     return (
       <Body onClick={handleClick}>
-        <h1>{title}</h1>
-        <h2> by {authors.join(', ')}</h2>
+        <h1>
+          {title}
+        </h1>
+        <h2>
+          by {authors.join(', ')}
+        </h2>
         Click on any text to move ahead
       </Body>
     );
   } else if (count >= storyLines.length) {
     return (
       <Body onClick={() => setCount(storyLines.length - 1)}>
-      <h1>The End</h1>
-      <Button onClick= { handleStorySelect } > Read '{title}' again!</Button>
-      <Button onClick= { handleHomeSelect } > Return to main page</Button>
+      <h1>
+        The End
+      </h1>
+      <Button onClick= { handleStorySelect }>
+        Read '{title}' again!</Button>
+      <Button onClick= { handleHomeSelect }>
+        Return to main page</Button>
       </Body>
     );
   } else {
     return (
       <Container>
-          <Arrow onClick={() => count >= 0 ? setCount(count - 1) : {}}> &lt;</Arrow>
+          <Arrow onClick={() => count >= 0 ? setCount(count - 1) : {}}>
+            &lt;
+          </Arrow>
           <Body>
-            <ImageStyle src= {storyLines[count].imgUrl} />
-            <Text>{storyLines[count].line}</Text>
+            <ImageStyle
+              src= {storyLines[count].imgUrl}
+            />
+            <Text>
+              {storyLines[count].line}
+            </Text>
           </Body>
-          <Arrow onClick={() => count <= storyLines.length ? setCount(count + 1) : {}} >&gt;</Arrow>
+          <Arrow onClick={() => count <= storyLines.length ? setCount(count + 1) : {}}>
+            &gt;
+          </Arrow>
       </Container>
-    )
+    );
   }
 };
 

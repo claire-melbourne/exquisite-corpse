@@ -50,37 +50,55 @@ const Button = styled.button`
 `;
 
 function Begin({title, authors, storyLines, selectView}) {
-
   const handleClick = () => {
     selectView('storyline')
-  }
+  };
   const handleBegin = () => {
     selectView('compile')
+  };
+  if (title === '') {
+    return null;
   }
-    if (title === '') {
-      return null;
-    }
-    if (storyLines.length > 0) {
-      return (
-        <Body>
-          <h2>Found your story!</h2>
-          <TitleText>'{title}'</TitleText>
-          <h3>Contributors:</h3>
-          {authors.map(author => <Author author = {author}/>)}
-          <Button onClick= { handleBegin }> Read '{title}' again!</Button>
-        </Body>
-      )
-    }
+  if (storyLines.length > 0) {
     return (
       <Body>
-        <h2>Story Title and Authors Saved!</h2>
-        <Entries>Your story is called.... </Entries>
-        <TitleText>'{title}'</TitleText>
-        <h3>Contributors:</h3>
+        <h2>
+          Found your story!
+        </h2>
+        <TitleText>
+          '{title}'
+        </TitleText>
+        <h3>
+          Contributors:
+        </h3>
         {authors.map(author => <Author author = {author}/>)}
-        <Button onClick= { handleClick }> Write the first line for {title}</Button>
+        <Button
+          onClick= { handleBegin }>
+          Read '{title}' again!
+        </Button>
       </Body>
-    )
-}
+    );
+  }
+  return (
+    <Body>
+      <h2>
+        Story Title and Authors Saved!
+      </h2>
+      <Entries>
+        Your story is called....
+      </Entries>
+      <TitleText>
+        '{title}'
+      </TitleText>
+      <h3>
+        Contributors:
+      </h3>
+      {authors.map(author => <Author author = {author}/>)}
+      <Button onClick= { handleClick }>
+        Write the first line for {title}
+      </Button>
+    </Body>
+  );
+};
 
 export default Begin;

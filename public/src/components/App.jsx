@@ -29,8 +29,6 @@ function App() {
   const [authorCount, setAuthorCount] = useState(0);
   const [recentStories, setRecentStories] = useState([]);
 
-  //const [authorNum, setAuthorNum] = useState(1);
-
   useEffect(() => {
     if (title) {
       let hyphenatedTitle = title.split(' ').join('-');
@@ -45,15 +43,13 @@ function App() {
       setStoryLines(res.data.storyLines);
     })
     .catch((err) => {
-      alert('No story with that title')
+      console.log('No story with that title');
       console.log(err);
     });
   };
 
   const searchStories = (search) => {
-    console.log('search term', search)
     let hyphSearch = search.split(' ').join('-');
-    console.log('search term hyph', hyphSearch)
     axios.get(`/story/${hyphSearch}`)
     .then((res) => {
       console.log('story retrieved, ', res.data)
@@ -64,7 +60,7 @@ function App() {
       setTitle(res.data.title);
       setStoryLines(res.data.storyLines);
       setAuthors(res.data.authors);
-    }
+      }
     })
     .catch((err) => {
       console.log(err);
@@ -78,9 +74,8 @@ function App() {
       for (var i = 0; i < res.data.length; i ++) {
         titles.push(res.data[i].title);
       }
-      console.log('titles', titles)
       setRecentStories(titles);
-      setView('recent')
+      setView('recent');
     })
     .catch((err) => {
       console.error(err);
@@ -91,11 +86,11 @@ function App() {
     axios.post('/title', storyObj)
     .then((res) => {
       if (res.data.title === undefined) {
-        alert('title taken, get creative')
+        alert('title taken, try another');
       } else {
         console.log("authors updated to ", res.data.authors);
         setTitle(res.data.title);
-        setAuthors(res.data.authors)
+        setAuthors(res.data.authors);
       }
     })
     .catch((err) => {
@@ -117,23 +112,19 @@ function App() {
   const saveStory = (storyTitle, one, two, three, four) => {
     let authorNames = [];
     authorNames.push(one, two, three, four);
-
     console.log("authors", authorNames);
     let storyInfo = {
       title: storyTitle,
       authors: authorNames
-    }
+    };
     createStory(storyInfo);
-  }
+  };
 
   const getLastWord = (line) => {
-    console.log('heres get last words', line)
     let words = line.split(' ');
-    console.log("words", words)
     let lastWords = words.slice([words.length - 3], [words.length]);
-    console.log('lastwords,', lastWords)
     setLastWord(lastWords.join(' '));
-  }
+  };
 
   const saveLine = (line) => {
     var count;
@@ -142,7 +133,7 @@ function App() {
     } else {
       count = authorCount + 1;
     }
-    setAuthorCount(count)
+    setAuthorCount(count);
     createLine(line);
     getLastWord(line);
   }
@@ -158,43 +149,62 @@ function App() {
     setAuthors([]);
     setStoryLines([]);
     setLastWord('');
-    //add delete api
   };
 
-//if view is recent stories
-  //return Container wrapping
-    //titles
-    //onClick for any title retrieve the rest of it and set view to compile
-  //Button to go home write a new story
 if (view === 'storyline') {
     return (
       <div>
-        <LineEntry saveLine= { line => saveLine(line) } authors= {authors} authorCount = {authorCount} lastWord= { lastWord }/>
-        <EndStory selectView= { view => selectView(view) } clearEntries= { () => clearEntries() } textToSpeech= { () => textToSpeech() } />
+        <LineEntry
+          saveLine= { line => saveLine(line) }
+          authors= {authors}
+          authorCount = {authorCount}
+          lastWord= { lastWord }
+        />
+        <EndStory
+          selectView= { view => selectView(view) }
+          clearEntries= { () => clearEntries() }
+          textToSpeech= { () => textToSpeech() }
+        />
       </div>
-    )
+    );
   } else if (view === 'recent') {
     return (
-    <Container>
-     <RecentTitles recentStories= {recentStories} selectView= { view => selectView(view) } searchStories= { selection => searchStories(selection) }/>
-  </Container>
-    )
+     <Container>
+      <RecentTitles
+        recentStories= {recentStories}
+        selectView= { view => selectView(view) }
+        searchStories= { selection => searchStories(selection) }
+      />
+    </Container>
+    );
   } else if (view === 'compile') {
     return (
       <div>
-        <StoryTeller storyLines= {storyLines} title= { title } authors= { authors } selectView= { view => selectView(view) } clearEntries= { () => clearEntries() }/>
+        <StoryTeller
+          storyLines= {storyLines}
+          title= { title } authors= { authors }
+          selectView= { view => selectView(view) }
+          clearEntries= { () => clearEntries() }
+        />
       </div>
-    )
+    );
   } else {
-
     return (
       <Container>
-        <TitleEntry saveStory= { (name, a1, a2, a3, a4) => saveStory(name, a1, a2, a3, a4) } savedTitle= {title} searchStories = { (search) => searchStories(search) }/>
-        <Begin title= {title} authors= {authors} storyLines= {storyLines} selectView= { view => selectView(view) }/>
+        <TitleEntry
+          saveStory= { (name, a1, a2, a3, a4) => saveStory(name, a1, a2, a3, a4) }
+          savedTitle= {title}
+          searchStories = { (search) => searchStories(search) }
+        />
+        <Begin
+          title= {title}
+          authors= {authors}
+          storyLines= {storyLines}
+          selectView= { view => selectView(view) }
+        />
       </Container>
-    )
-
+    );
   }
-}
+};
 
 export default App;

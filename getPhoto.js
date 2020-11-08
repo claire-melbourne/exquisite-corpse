@@ -12,7 +12,7 @@ const getPhoto = (keywords, cb) => {
       query: keywords,
       orientation: 'landscape'
     }
-  }
+  };
   axios(options)
   .then(result => {
     console.log('url received');
@@ -20,10 +20,8 @@ const getPhoto = (keywords, cb) => {
   })
   .catch(err => {
     console.error('ERROR:', err);
-  })
-}
+  });
+};
 
 module.exports = getPhoto;
-// getPhoto('cat,time', (url)=> {
-//   console.log(url)
-// });
+

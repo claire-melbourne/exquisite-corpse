@@ -3,8 +3,9 @@ const language = require('../language.js');
 const getPhoto = require('../getPhoto.js');
 const getSpeech = require('../speech.js');
 const express = require('express');
-const PORT = 3000;
+const PORT = 3001;
 const app = express();
+
 app.use(express.json());
 app.use(express.urlencoded({extended: true}));
 
@@ -14,20 +15,6 @@ app.get('/story/:title', (req, res) => {
   let title = req.params.title.split('-').join(' ');
   controller.getStory(title, res);
 });
-
-// app.get('/speech/:title', (req, res) => {
-//   console.log(req.params);
-//   let title = req.params.title.split('-').join(' ');
-//   controller.getText(title, (err, result) => {
-//     if (err) {
-//       console.error(err);
-//       res.end('no sound update');
-//     } else {
-//       getSpeech(result);
-//       res.status(200).send(result);
-//     }
-//   });
-// });
 
 app.get('/recent', (req, res) => {
   controller.getLatest(res);
@@ -45,6 +32,7 @@ app.post('/title', (req, res) => {
     }
   });
 });
+
 app.put('/addline/:title', (req, res) => {
   let title = req.params.title.split('-').join(' ');
   let text = req.body.line
@@ -59,7 +47,7 @@ app.put('/addline/:title', (req, res) => {
         }
       });
     });
- });
+  });
 });
 
 app.listen(PORT, () => console.log(`Listening on ${PORT}`));

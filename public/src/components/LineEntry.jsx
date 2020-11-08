@@ -57,7 +57,6 @@ const SubmitInput = styled.input`
 
 
 function LineEntry( { saveLine, lastWord, authors, authorCount } ) {
-  console.log("last word " + lastWord)
   const [line, setLine] = useState('');
 
   const storyPrompts = {
@@ -78,7 +77,6 @@ function LineEntry( { saveLine, lastWord, authors, authorCount } ) {
       </Entries>
       <form onSubmit= { handleSubmit }>
         <Entries>
-          {``}<br></br>
           <StyledTextArea
             value= {line}
             required
@@ -93,7 +91,7 @@ function LineEntry( { saveLine, lastWord, authors, authorCount } ) {
         </Entries>
       </form>
     </Body>
-  )
-}
+  );
+};
 
 export default LineEntry;
