@@ -1,1 +1,6 @@
-# exquisite-corpse
+# Exquisite Corps-y Time
+ Exquisite Corps-y Time is a game built off a little creative writing activity one might have played with friends at a coffee shop or bar in olden times. Originally, a paper napkin or back of recipt became manuscript; each participant took their turn to write a few lines of prose or poetry, folding the paper over to leave only the last few words of their brilliance visible to the next participant, whose task is to build off the text left to them. At the end, the paper is unfolded to reveal the entire wacky or surprisingly logical collaborative work. Call it advanced Mad Libs if you like.
+ 
+This project aims to emulate the pieced together surprise of a story by allowing up to four participants to join a story, each taking turns to build off the previous author's last few words. However, in this case, the text submissions are collected and analyzed by GCP Natural Speech to locate key words for an image search, such that the story text is paired with a (pseudo) relevant image. When participants are satisfied, they can end the story and retrieve their saved story for playback as a slideshow/storybook. 
+
+The delight, absurdity and surprisingly salient combinations of the photos and series of text submissions can be as simple as humorous bonding over wordplay, while also creating an opportunity to explore notions of narrative and meaning-making.
