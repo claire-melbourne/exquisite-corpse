@@ -10,7 +10,11 @@ The delight, absurdity and surprisingly salient combinations of the photos and s
 
 (All of this is specific to Mac)
 
-First, install Xcode:
+First, check that you have node and npm installed.
+ > node --version
+ > npm --version
+
+If you have trouble installing or running node/npm, you may need to install Xcode:
   > xcode-select --install
 
 You'll also need Mongo. The latest installation docs are here: https://docs.mongodb.com/manual/tutorial/install-mongodb-on-os-x/
