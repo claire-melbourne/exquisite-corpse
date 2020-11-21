@@ -22,14 +22,12 @@ Short version, using brew:
 Start up Mongo
   > brew services start mongodb/brew/mongodb-community
 
-_TODO: When I ran it locally, it ran but didn't save the story to replay it properly! Not sure if that's a Mongo issue or something else, worth looking into._
-
 Install required Node packages:
-  > npm install (probably)
+  > npm install
 
-_TODO: You may need to create a config.js file (via `touch config.js` in the root directory), I just made an empty one and it got the app to load, though there may be required keys you'd need_>
-
-_TODO: You also need an API key from Google's text to speech service, not sure where that goes? I got errors related to this when running it locally_.
+You will need to create a config.js file (via `touch config.js` in the root directory), and copy the config.example.js into it, adding your own API keys for Google Cloud Products Natural Language and Unsplash:
+  > https://unsplash.com/developers
+  > https://cloud.google.com/docs/authentication/api-keys
 
 # Commands
 
