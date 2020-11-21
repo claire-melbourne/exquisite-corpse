@@ -1,6 +1,10 @@
-module.exports = async function analyzeSyntaxOfText(text, callback) {
+const config = require('./config.js');
+
+var analyzeSyntaxOfText = async function (text, callback) {
+  const projectId = config.projectId;
+  const keyFilename = config.keyFilename;
   const language = require('@google-cloud/language');
-  const client = new language.LanguageServiceClient();
+  const client = new language.LanguageServiceClient(projectId, keyFilename);
   const document = {
     content: text,
     type: 'PLAIN_TEXT'
@@ -29,4 +33,4 @@ module.exports = async function analyzeSyntaxOfText(text, callback) {
   callback(photoSearch)
 }
 //FOR DEBUGGING
-// analyzeSyntaxOfText('I am the fluffy end but I will keep cats if you let me', (input) => console.log(`https://loremflickr.com/320/240/${input}`))
+ analyzeSyntaxOfText('I am the fluffy end but I will keep cats if you let me', (input) => console.log(`https://loremflickr.com/320/240/${input}`))

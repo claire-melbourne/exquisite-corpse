@@ -1,7 +1,6 @@
 const controller = require('../db/controller.js');
-const language = require('../language.js');
-const getPhoto = require('../getPhoto.js');
-const getSpeech = require('../speech.js');
+const getWords = require('../externalRequests/getWords.js');
+const getPhoto = require('../externalRequests/getPhoto.js');
 const express = require('express');
 const PORT = 3001;
 const app = express();
@@ -36,7 +35,7 @@ app.post('/title', (req, res) => {
 app.put('/addline/:title', (req, res) => {
   let title = req.params.title.split('-').join(' ');
   let text = req.body.line
-  language(text, (keywords) => {
+  getWords(text, (keywords) => {
     getPhoto(keywords, (imgUrl) => {
       controller.addLine(title, text, keywords, imgUrl, (err, result) => {
         if (err) {
