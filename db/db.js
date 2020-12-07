@@ -1,5 +1,7 @@
 const mongoose = require('mongoose');
-const dbURI = 'mongodb://localhost/stories';
+const config = require('../config');
+const dbURI = config.DB_URI;
+
 const db = mongoose.connect(dbURI);
 
 module.exports = db;

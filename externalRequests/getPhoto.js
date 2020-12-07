@@ -1,6 +1,5 @@
 const config = require('../config.js');
 const axios = require('axios');
-
 const getPhoto = (keywords, cb) => {
   let options = {
     method: 'get',

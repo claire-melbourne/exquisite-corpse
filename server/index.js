@@ -1,8 +1,9 @@
 const controller = require('../db/controller.js');
 const getWords = require('../externalRequests/getWords.js');
 const getPhoto = require('../externalRequests/getPhoto.js');
+const config = require('../config')
 const express = require('express');
-const PORT = 3001;
+const PORT = process.env.PORT || 3001;
 const app = express();
 
 app.use(express.json());
